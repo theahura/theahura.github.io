@@ -37,13 +37,78 @@
           <span class="game-description">Daily 2D platformer challenge. Race to the finish, collect coins, beat your personal best.</span>
         </div>
       </a>
-      <a class="game-card" href="backrooms/">
-        <div class="game-card-body">
-          <span class="game-name">Backrooms</span>
-          <span class="game-description">Survival-horror twin-stick shooter. Explore pitch-black liminal spaces by flashlight, scavenge treasure, and escape before your battery dies.</span>
-        </div>
-      </a>
+      <div class="game-card game-card--backrooms">
+        <a class="game-card-link" href="backrooms/">
+          <div class="game-card-image game-card-image--backrooms" aria-hidden="true"></div>
+          <div class="game-card-body">
+            <span class="game-name">Backrooms</span>
+            <span class="game-description">Survival-horror twin-stick shooter. Explore pitch-black liminal spaces by flashlight, scavenge treasure, and escape before your battery dies.</span>
+          </div>
+        </a>
+        <button
+          type="button"
+          class="share-button"
+          data-share-url="https://amolkapoor.com/games/backrooms/"
+          data-share-title="Backrooms"
+          data-share-text="Explore pitch-black liminal spaces by flashlight in Backrooms — a survival-horror browser game."
+          aria-label="Share Backrooms"
+        >
+          <svg class="share-button-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+          <span class="share-button-label">Share</span>
+        </button>
+      </div>
     </section>
   </main>
+
+  <script>
+    document.querySelectorAll('.share-button').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var url = button.dataset.shareUrl;
+        var label = button.querySelector('.share-button-label');
+
+        if (navigator.share) {
+          navigator.share({
+            title: button.dataset.shareTitle || document.title,
+            text: button.dataset.shareText || '',
+            url: url
+          }).catch(function () {});
+          return;
+        }
+
+        var showCopied = function () {
+          var original = label.textContent;
+          label.textContent = 'Copied!';
+          button.classList.add('copied');
+          setTimeout(function () {
+            label.textContent = original;
+            button.classList.remove('copied');
+          }, 1600);
+        };
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(showCopied).catch(function () {});
+        } else {
+          var temp = document.createElement('textarea');
+          temp.value = url;
+          temp.setAttribute('readonly', '');
+          temp.style.position = 'absolute';
+          temp.style.left = '-9999px';
+          document.body.appendChild(temp);
+          temp.select();
+          try {
+            document.execCommand('copy');
+            showCopied();
+          } catch (err) {}
+          document.body.removeChild(temp);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
