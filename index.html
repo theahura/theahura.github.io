@@ -23,6 +23,7 @@
 />
 <meta name="twitter:card" content="summary_large_image" />
 
+<link rel="service" type="application/json" href="https://noriagentic.com/agent/amolkapoor/api/search" />
 <link rel="icon" href="spy.ico" type="image/x-icon" />
 <link rel="shortcut icon" href="spy.ico" type="image/x-icon" />
 
@@ -56,6 +57,16 @@
   .links {
     padding-top: 3%;
     text-align: center;
+  }
+
+  .ask-panel p {
+    margin: 0.5em 0;
+    overflow-wrap: anywhere;
+  }
+
+  .ask-panel input {
+    font-family: inherit;
+    min-width: 50%;
   }
 
   .link-container {
@@ -184,5 +195,19 @@
       If you want me to talk to people about things, reach out.
     </li>
   </ul>
+</div>
+<div class="links ask-panel">
+  <p>
+    Questions for Amol? Ask our expert &mdash; you&rsquo;ll get links to the pages on this site that answer them.
+  </p>
+  <p>
+    GET https://noriagentic.com/agent/amolkapoor/ask?q=your question &mdash; or POST the field q.
+    JSON: GET https://noriagentic.com/agent/amolkapoor/api/search?q=your question
+  </p>
+  <form action="https://noriagentic.com/agent/amolkapoor/ask" method="get">
+    <label for="ask-q">Your question</label>
+    <input id="ask-q" name="q" maxlength="500" />
+    <button type="submit">Ask</button>
+  </form>
 </div>
 <div class="spacer"></div>
